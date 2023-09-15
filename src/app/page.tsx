@@ -1,8 +1,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 
 export default function Home() {
  
