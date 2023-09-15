@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+
+
+
+generator client {
+  provider = "prisma-client-js"
+
+  previewFeatures = ["mongodb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User{
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  phone     String   @unique
+  enabled   Boolean @default(false)
+
+
+
+  createdAt DateTime  @default(now())
+
+  // KhanePaniOffice
+  // KhanePaniId String? @unique
+  ElecricityId String 
+  ElectricityScNo String
+  ElectricityOfficeName String
+  bills ElectricityBill[]
+
+
+
+  
+  
+}
+
+model ElectricityBill{
+  OfficeName String
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String @db.ObjectId
+  month     String
+  year      String
+  amount    Int
+  paid      Boolean @default(false)
+  createdAt DateTime  @default(now())
+}
+
+
+// to gener8 prisma client use command npx prisma generate
+// and then use npx prisma db push to push the code to the mongodb uri
