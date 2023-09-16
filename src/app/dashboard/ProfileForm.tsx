@@ -40,7 +40,7 @@ if (name && phoneNumber && ElecricityID && ElecricityScNo && OfficeName && trans
 } else {
     alert("Form cannot be empty");
      setsubmited(false);
-   return ;
+     return ;
   
 
 }
@@ -55,7 +55,7 @@ if (name && phoneNumber && ElecricityID && ElecricityScNo && OfficeName && trans
       body: JSON.stringify({ name, phone:phoneNumber, ElecricityId:ElecricityID,ElectricityScNo: ElecricityScNo,ElectricityOfficeName: OfficeName,enabled:enableFeature,transactionID }),
     });
 
-    if(formdata.status==404){
+    if(formdata.status===404){
       alert('Error occured check all values and try again')
     }
 

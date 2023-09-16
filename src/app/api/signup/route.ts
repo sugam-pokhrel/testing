@@ -55,20 +55,22 @@ export async function PUT(request:Request,res:any) {
 export async function POST(request:Request,res:any) {
     var session:any= await getServerSession();
     let response = NextResponse.next()
+    console.log(session)
 
      
 
-      if (session !== null) {
+    if (session !== null) {
     const email = session.user.email;
     const data=await request.json();
 
 
-if (data.name && data.phoneNumber && data.ElecricityID && data.ElecricityScNo && data.OfficeName && data.transactionID !== '') {
+if (data.name && data.phone && data.ElecricityId && data.ElectricityScNo && data.ElectricityOfficeName && data.transactionID !== '') {
     // All variables are not empty, and transactionID is not empty.
     // You can proceed with your code here.
+    console.log('all good')
     
 } else {
-   console.log('something went wrong')
+  console.log('something went wrong')
   return  NextResponse.json({message:'err'},{status:404})
    
 
@@ -80,12 +82,7 @@ if (data.name && data.phoneNumber && data.ElecricityID && data.ElecricityScNo &&
 
 }
 
-   if(! data.name&&data.phoneNumber&&data.ElecricityID&&data.ElecricityScNo&&data.OfficeName&&data.transactionID ===''){
-      
-      
-      NextResponse.json({ error: 'Something went wrong' }, { status: 401 })
-      return ;
-    }
+
 //     if (Object.keys(data.address).every(function(x) { return data.address[x]===''||data.address[x]===null;}) === false) {
 //    console.log('has something');
 // } else {
@@ -94,7 +91,9 @@ if (data.name && data.phoneNumber && data.ElecricityID && data.ElecricityScNo &&
 
     
     try{
-            const user= await prisma.user.create({
+
+      console.log('creating')
+          const user= await prisma.user.create({
         
            data:{
             email,
@@ -119,7 +118,7 @@ if (data.name && data.phoneNumber && data.ElecricityID && data.ElecricityScNo &&
         
 
     });
-          return  NextResponse.json({message:"Succesfully created the users"},{status:200})
+        return  NextResponse.json({message:"Succesfully created the users"},{status:200})
 
 
     }catch(e){

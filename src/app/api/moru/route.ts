@@ -81,10 +81,19 @@
 const cron = require('node-cron');
 import { NextResponse } from 'next/server';
 const nodemailer = require('nodemailer');
-
+import prisma from '../../libs/prismadb'
 
 export async function GET(request:Request,res:any) {
 
+let email=await prisma.user.findMany({
+  select:{
+    email:true
+  },where:{
+    enabled:true
+  }
+});
+  const emails = email.map((user) => user.email);
+  
 
 // Create a transporter using Gmail SMTP
 const transporter = nodemailer.createTransport({
@@ -98,9 +107,9 @@ const transporter = nodemailer.createTransport({
 // Define the email message
 const mailOptions = {
   from: process.env.EMAIL,        // Sender's email address
-  to: ['psugam75@gmail.com'],  // An array of recipient email addresses
-  subject: 'Your automatice billing',      // Email subject
-  text: 'Your automatic billing has been started', // Email body (plaintext)
+  to: emails,  // An array of recipient email addresses
+  subject: 'Automated Billing',      // Email subject
+  text: 'Thank you for your request we will verify your account shortly and email you', // Email body (plaintext)
   // You can also use "html" property for HTML content
 };
 
