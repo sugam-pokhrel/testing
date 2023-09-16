@@ -90,8 +90,10 @@ let email=await prisma.user.findMany({
     email:true
   }
 });
-  const emails = email.map((user) => user.email);
-  
+
+
+
+
 
 // Create a transporter using Gmail SMTP
 const transporter = nodemailer.createTransport({
@@ -102,28 +104,29 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Define the email message
-const mailOptions = {
+  email.forEach(async element => {
+  console.log(element)
+  const mailOptions = {
   from: process.env.EMAIL,        // Sender's email address
-  to: emails,  // An array of recipient email addresses
+  to: element.email,  // An array of recipient email addresses
   subject: 'Automated Billing',      // Email subject
   text: 'Thank you for your request we will verify your account shortly and email you', // Email body (plaintext)
   // You can also use "html" property for HTML content
 };
 
 // Schedule the email to be sent every 32 days
-cron.schedule('0 0 */31 * *', () => {
-  // Send the email
-  transporter.sendMail(mailOptions, (error:any, info:any) => {
-    if (error) {
-      console.error('Error sending email:', error);
-    } else {
-      console.log('Email sent:', info.response);
-    }
-  });
-});
+// cron.schedule('0 0 */31 * *', () => {
+//   // Send the email
+//   transporter.sendMail(mailOptions, (error:any, info:any) => {
+//     if (error) {
+//       console.error('Error sending email:', error);
+//     } else {
+//       console.log('Email sent:', info.response);
+//     }
+//   });
+// });
 
-console.log('Email scheduler started.');
+// console.log('Email scheduler started.');
 
 
  let data=await transporter.sendMail(mailOptions, (error:any, info:any) => {
@@ -133,6 +136,13 @@ console.log('Email scheduler started.');
       console.log('Email sent:', info.response);
     }
   });
+    
+    
+  });
+  
+
+// Define the email message
+
 
     return NextResponse.json({msg:'success'});
 
