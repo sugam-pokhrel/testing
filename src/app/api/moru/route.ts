@@ -88,8 +88,6 @@ export async function GET(request:Request,res:any) {
 let email=await prisma.user.findMany({
   select:{
     email:true
-  },where:{
-    enabled:true
   }
 });
   const emails = email.map((user) => user.email);
