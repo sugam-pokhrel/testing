@@ -1,8 +1,7 @@
 'use client';
 import React, { useState ,useEffect, FC} from 'react';
 import Loading from './loading';
-import Link from 'next/link';
-import { set } from 'mongoose';
+
 // interface User{
 //   name:string,
 //   phone:string,
