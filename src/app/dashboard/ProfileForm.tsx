@@ -38,9 +38,9 @@ if (name && phoneNumber && ElecricityID && ElecricityScNo && OfficeName && trans
     // You can proceed with your code here.
     
 } else {
-  //   alert("Form cannot be empty");
-  //    setsubmited(false);
-  //  return ;
+    alert("Form cannot be empty");
+     setsubmited(false);
+   return ;
   
 
 }
