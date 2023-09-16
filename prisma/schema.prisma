@@ -21,6 +21,7 @@ model User{
   name      String
   email     String   @unique
   phone     String   @unique
+  transactionId String 
   enabled   Boolean @default(false)
 
 

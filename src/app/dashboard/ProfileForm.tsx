@@ -17,14 +17,14 @@ import { set } from 'mongoose';
 // }
 const Form :any=  (props: {value:boolean, user: {
   [x: string]: any; name: any; 
-}; phone: String; ElecricityId: String; ElectricityScNo: String; ElectricityOfficeName: String; enabled: boolean; }):any=> {
+}; phone: String; transactionId:String; ElecricityId: String; ElectricityScNo: String; ElectricityOfficeName: String; enabled: boolean; }):any=> {
   console.log(props?.user)
   const [name, setName] = useState(props.value?props.user.name:'');
   const [phoneNumber, setphoneNumber] = useState(props.value?props.user.phone:'');
   const [ElecricityID, setElecricityID] = useState(props.value?props.user.ElecricityId:'');
   const [ElecricityScNo, setElecricityScNo] = useState(props.value?props.user.ElectricityScNo:'');
   const [OfficeName, setOfficeName] = useState(props.value?props.user.ElectricityOfficeName:'');
-  
+  const [transactionID,settransactionId]=useState(props.value?props.user.transactionId:'')
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [submited,setsubmited]=useState(false)
@@ -34,12 +34,17 @@ const Form :any=  (props: {value:boolean, user: {
 
     setsubmited(true);
 
-    if(! name&&phoneNumber&&ElecricityID&&ElecricityScNo&&OfficeName===''){
+if (name && phoneNumber && ElecricityID && ElecricityScNo && OfficeName && transactionID !== '') {
+    // All variables are not empty, and transactionID is not empty.
+    // You can proceed with your code here.
+    
+} else {
+  //   alert("Form cannot be empty");
+  //    setsubmited(false);
+  //  return ;
+  
 
-      
-      alert("Form cannot be empty")
-      return ;
-    }
+}
     e.preventDefault();
 
     try{
@@ -48,13 +53,18 @@ const Form :any=  (props: {value:boolean, user: {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, phone:phoneNumber, ElecricityId:ElecricityID,ElectricityScNo: ElecricityScNo,ElectricityOfficeName: OfficeName,enabled:enableFeature }),
+      body: JSON.stringify({ name, phone:phoneNumber, ElecricityId:ElecricityID,ElectricityScNo: ElecricityScNo,ElectricityOfficeName: OfficeName,enabled:enableFeature,transactionID }),
     });
+
+    if(formdata.status==404){
+      alert('Error occured check all values and try again')
+    }
 
 
     let res=await formdata.json();
-    alert("Successfully updated")
+
     setsubmited(false);
+    alert(res.message)
 
     }catch(err){
       alert("Error occured check all values and try again")
@@ -91,6 +101,7 @@ if(submited){
 
 
   return (
+    
       
     <div className={`flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'dark' : ''}`}>
       <div className="max-w-md w-full space-y-8">
@@ -183,8 +194,30 @@ if(submited){
               disabled={isSubmitting}
             />
           </div>
+
+               <label htmlFor="transactionID" className="block text-lg font-medium">
+               EnterYourTransactionPin:
+            </label>
+            <input
+            required
+              type="text"
+              id="transactionID"
+              placeholder="EnterYourTransactionPin"
+              className={`mt-1 block w-full px-4 py-2 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}
+              value={transactionID}
+              onChange={(e) => settransactionId(e.target.value)}
+              disabled={isSubmitting}
+            />
+         
+
+
+          
+
+
+
+
           <label htmlFor="enableFeature">enable feature</label>
-      <input id="enableFeature" type="checkbox" name="enableFeature" checked={enableFeature} onClick={(e) => setEnableFeature(!enableFeature)} />
+      <input id="enableFeature" type="checkbox" name="enableFeature" onChange={(e)=>setEnableFeature(!enableFeature)} checked={enableFeature} onClick={(e) => setEnableFeature(!enableFeature)} />
           </div>
           <button
             onClick={(e)=>handleSubmit(e)}
@@ -197,6 +230,7 @@ if(submited){
         </form>
       </div>
     </div>
+   
   );
 };
     
