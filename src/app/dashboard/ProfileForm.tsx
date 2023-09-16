@@ -1,5 +1,5 @@
 'use client';
-import React, { useState ,useEffect, FC} from 'react';
+import React, { useState} from 'react';
 import Loading from './loading';
 
 // interface User{
@@ -17,7 +17,7 @@ import Loading from './loading';
 const Form :any=  (props: {value:boolean, user: {
   [x: string]: any; name: any; 
 }; phone: String; transactionId:String; ElecricityId: String; ElectricityScNo: String; ElectricityOfficeName: String; enabled: boolean; }):any=> {
-  console.log(props?.user)
+  
   const [name, setName] = useState(props.value?props.user.name:'');
   const [phoneNumber, setphoneNumber] = useState(props.value?props.user.phone:'');
   const [ElecricityID, setElecricityID] = useState(props.value?props.user.ElecricityId:'');
@@ -28,7 +28,7 @@ const Form :any=  (props: {value:boolean, user: {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [submited,setsubmited]=useState(false)
   const [enableFeature, setEnableFeature] = useState(props.value?props.user.enabled:false);
-  console.log(props.value)
+  
   const handleSubmit = async (e:any) => {
 
     setsubmited(true);
