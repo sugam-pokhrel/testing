@@ -3,6 +3,8 @@ from pymongo import MongoClient
 
 # List of email_id to send the mail
 
+
+
 db_url = 'mongodb+srv://sugamf7:%40Safal12345@cluster0.acytgle.mongodb.net/morupayment'
 client = MongoClient(db_url)
 db = client.get_database()
